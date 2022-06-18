@@ -1,0 +1,31 @@
+replicaCount: 1
+
+image:
+  repository: quay.io/redhatworkshops/bgd
+  pullPolicy: IfNotPresent
+  tag: latest
+
+imagePullSecrets: []
+nameOverride: ""
+fullnameOverride: ""
+
+serviceAccount:
+  create: true
+  annotations: {}
+  name: ""
+
+podAnnotations: {}
+
+podSecurityContext: {}
+
+securityContext: {}
+
+service:
+  type: ClusterIP
+  port: 80
+
+resources: {}
+
+nodeSelector: {}
+tolerations: []
+affinity: {}
