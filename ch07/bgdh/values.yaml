@@ -1,9 +1,9 @@
 replicaCount: 1
 
 image:
-  repository: quay.io/redhatworkshops/bgd
+  repository: quay.io/rhdevelopers/bgd
   pullPolicy: IfNotPresent
-  tag: latest
+  tag: 1.0.0
 
 imagePullSecrets: []
 nameOverride: ""
