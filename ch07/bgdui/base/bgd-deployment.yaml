@@ -5,7 +5,7 @@ metadata:
   labels:
     app: bgd
   name: bgd
-  namespace: bgdiu
+  namespace: bgdk
 spec:
   replicas: 1
   selector:

@@ -1,4 +1,4 @@
-namespace: bgdiu
+namespace: bgdk
 resources:
 - bgd-svc.yaml
 - bgd-deployment.yaml
