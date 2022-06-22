@@ -1,0 +1,68 @@
+---
+apiVersion: "v1"
+kind: ServiceAccount
+metadata:
+  name: bubblefrontend
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: bubblefrontend-view
+roleRef:
+  kind: ClusterRole
+  apiGroup: rbac.authorization.k8s.io
+  name: view
+subjects:
+  - kind: ServiceAccount
+    name: bubblefrontend
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: view
+rules:
+  - apiGroups: ["networking.istio.io"]
+    resources: ["virtualservices"]
+    verbs: ["list", "get"]
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: bubblefrontend
+    version: v1
+  name: bubblefrontend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: bubblefrontend
+      version: v1
+  template:
+    metadata:
+      labels:
+        app: bubblefrontend
+        version: v1
+      annotations:
+        sidecar.istio.io/inject: "true"
+    spec:
+      containers:
+      - env:
+        - name: JAVA_OPTIONS
+          value: -Xms15m -Xmx15m -Xmn15m
+        name: bubblefrontend
+        image: quay.io/rhdevelopers/bubble-frontend:v1.0
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 8080
+          name: http
+          protocol: TCP
+        - containerPort: 8778
+          name: jolokia
+          protocol: TCP
+        - containerPort: 9779
+          name: prometheus
+          protocol: TCP
+        securityContext:
+          privileged: false
+      serviceAccount: bubblefrontend
