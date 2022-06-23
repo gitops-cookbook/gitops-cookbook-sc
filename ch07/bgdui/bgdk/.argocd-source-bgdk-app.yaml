@@ -1,0 +1,3 @@
+kustomize:
+  images:
+  - quay.io/rhdevelopers/bgd:1.1.0
